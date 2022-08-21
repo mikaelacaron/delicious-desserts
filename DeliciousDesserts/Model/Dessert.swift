@@ -23,11 +23,17 @@ struct DessertResponse: Codable {
 
 // MARK: - Dessert
 struct Dessert: Codable, Comparable {
-    let strMeal: String
-    let strMealThumb: String
-    let idMeal: String
+    let name: String
+    let thumbnailUrl: String
+    let id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "strMeal"
+        case thumbnailUrl = "strMealThumb"
+        case id = "idMeal"
+    }
     
     static func < (lhs: Dessert, rhs: Dessert) -> Bool {
-        return lhs.strMeal < rhs.strMeal
+        return lhs.name < rhs.name
     }
 }

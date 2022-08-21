@@ -21,7 +21,7 @@ class DessertDetailVC: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        title = dessert.strMeal
+        title = dessert.name
     }
     
     required init?(coder: NSCoder) {
@@ -59,7 +59,7 @@ class DessertDetailVC: UIViewController {
     }
     
     func getDetails(dessert: Dessert) {
-        networkManager.getDetails(for: dessert.idMeal) { [weak self] (result: Result<Details, DDError>) in
+        networkManager.getDetails(for: dessert.id) { [weak self] (result: Result<Details, DDError>) in
             guard let self = self else { return }
             
             switch result {
@@ -73,10 +73,7 @@ class DessertDetailVC: UIViewController {
     
     func updateUI(with details: Details) {
         self.details = details
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        tableView.reloadDataOnMainThread()
     }
 }
 
@@ -92,10 +89,10 @@ extension DessertDetailVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: IngredientsCell.reuseID) as! IngredientsCell
             cell.set(details: details)
             return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: InstructionsCell.reuseID) as! InstructionsCell
+            cell.set(details: details)
+            return cell
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: InstructionsCell.reuseID) as! InstructionsCell
-        cell.set(details: details)
-        return cell
     }
 }

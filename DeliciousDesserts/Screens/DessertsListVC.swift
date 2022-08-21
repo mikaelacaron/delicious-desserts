@@ -68,10 +68,7 @@ class DessertsListVC: UIViewController {
     
     func updateUI(with desserts: [Dessert]) {
         self.desserts = desserts
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        tableView.reloadDataOnMainThread()
     }
     
 }

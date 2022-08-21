@@ -22,28 +22,31 @@ class DessertCell: UITableViewCell {
    }
    
     func set(dessert: Dessert) {
-        nameLabel.text = dessert.strMeal
-        dessertImageView.sd_setImage(with: URL(string:dessert.strMealThumb), placeholderImage: Images.placeholder)
-        
+        nameLabel.text = dessert.name
+        dessertImageView.sd_setImage(with: URL(string:dessert.thumbnailUrl), placeholderImage: Images.placeholder)
    }
    
    private func configure() {
        selectionStyle = .none
+       accessoryType = .disclosureIndicator
        
        addSubViews(dessertImageView, nameLabel)
-       accessoryType = .disclosureIndicator
+       
        let padding: CGFloat = 12
+       let dessertImageViewWidthHeight: CGFloat = 60
+       let nameLabelLeadingPadding: CGFloat = 24
+       let nameLabelHeight: CGFloat = 40
        
        NSLayoutConstraint.activate([
-           dessertImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-           dessertImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-           dessertImageView.heightAnchor.constraint(equalToConstant: 60),
-           dessertImageView.widthAnchor.constraint(equalToConstant: 60),
+           dessertImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+           dessertImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+           dessertImageView.heightAnchor.constraint(equalToConstant: dessertImageViewWidthHeight),
+           dessertImageView.widthAnchor.constraint(equalToConstant: dessertImageViewWidthHeight),
            
-           nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-           nameLabel.leadingAnchor.constraint(equalTo: dessertImageView.trailingAnchor, constant: 24),
-           nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
-           nameLabel.heightAnchor.constraint(equalToConstant: 40)
+           nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+           nameLabel.leadingAnchor.constraint(equalTo: dessertImageView.trailingAnchor, constant: nameLabelLeadingPadding),
+           nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+           nameLabel.heightAnchor.constraint(equalToConstant: nameLabelHeight)
        ])
    }
    

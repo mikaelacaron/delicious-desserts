@@ -14,8 +14,11 @@ protocol NetworkManagerProtocol {
 
 class NetworkManager: NetworkManagerProtocol {
     
-    private var baseUrl = "https://www.themealdb.com/api/json/v1/1/"
-    let cache = NSCache<NSString, UIImage>()
+    private var baseUrl: String
+    
+    init(baseUrl: String = "https://www.themealdb.com/api/json/v1/1/") {
+        self.baseUrl = baseUrl
+    }
     
     func getDesserts(completed: @escaping (Result<[Dessert], DDError>) -> Void) {
         let endpoint = baseUrl + "filter.php?c=Dessert"
@@ -43,37 +46,6 @@ class NetworkManager: NetworkManagerProtocol {
                 completed(.failure(error))
             }
         }
-    }
-    
-    func downloadImage(from urlString: String, completed: @escaping (UIImage?) -> Void) {
-        let cacheKey = NSString(string: urlString)
-        
-        if let image = cache.object(forKey: cacheKey) {
-            completed(image)
-            return
-        }
-        
-        guard let url = URL(string: urlString) else {
-            completed(nil)
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let self = self,
-                  error == nil,
-                  let response = response as? HTTPURLResponse, response.statusCode == 200,
-                  let data = data,
-                  let image = UIImage(data: data) else {
-                      completed(nil)
-                      return
-                  }
-            
-            
-            self.cache.setObject(image, forKey: cacheKey)
-            completed(image)
-        }
-        
-        task.resume()
     }
     
     private func fetchGenericJSONData<T: Decodable>(urlString: String, completed: @escaping (Result<T, DDError>) -> Void) {

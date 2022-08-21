@@ -27,7 +27,10 @@ class DeliciousDessertsTests: XCTestCase {
             (result: Result<[Dessert], DDError>) in
             switch result {
             case .success(let desserts):
-                XCTAssertEqual(desserts, desserts.sorted())
+                for (index, dessert) in desserts.enumerated() where index != desserts.count - 1 {
+                    let next = desserts[index + 1]
+                    XCTAssertTrue(dessert.name < next.name)
+                }
             case .failure(_):
                 break
             }
