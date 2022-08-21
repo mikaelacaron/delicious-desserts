@@ -13,7 +13,13 @@ class DeliciousDessertsTests: XCTestCase {
     var networkManager: NetworkManagerProtocol!
     
     override func setUp() {
+        super.setUp()
         networkManager = MockNetworkManager()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        networkManager = nil
     }
 
     func testGetDesserts() throws {
