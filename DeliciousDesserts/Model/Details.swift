@@ -28,19 +28,19 @@ struct DessertDetailsResponse: Codable {
             ingredients.append(ingredient)
         }
         
-        return Details(strMeal: mealName, strInstructions: instructions, ingredients: ingredients)
+        return Details(name: mealName, instructions: instructions, ingredients: ingredients)
     }
 }
 
 // MARK: - Detail
 struct Details {
-    let strMeal: String
-    let strInstructions: String
-    var ingredients: [Ingredient]
+    let name: String
+    let instructions: String
+    let ingredients: [Ingredient]
 }
 
 // MARK: - Ingredient
 struct Ingredient {
-    var name: String
-    var measurement: String
+    let name: String
+    let measurement: String
 }

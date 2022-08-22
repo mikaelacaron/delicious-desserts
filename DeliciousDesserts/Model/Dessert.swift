@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - DessertResponse
 struct DessertResponse: Codable {
-    var meals: [Dessert]
+    let meals: [Dessert]
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

@@ -7,9 +7,7 @@
 
 import UIKit
 
-class DessertDetailVC: UIViewController {
-    
-    let tableView = UITableView()
+class DessertDetailVC: UITableViewController {
     
     var dessert: Dessert
     var details: Details?
@@ -47,12 +45,8 @@ class DessertDetailVC: UIViewController {
     }
     
     func configureTableView() {
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.removeExcessCells()
         tableView.register(IngredientsCell.self, forCellReuseIdentifier: IngredientsCell.reuseID)
         tableView.register(InstructionsCell.self, forCellReuseIdentifier: InstructionsCell.reuseID)
@@ -73,16 +67,16 @@ class DessertDetailVC: UIViewController {
     
     func updateUI(with details: Details) {
         self.details = details
-        tableView.reloadDataOnMainThread()
+        reloadDataOnMainThread()
     }
 }
 
-extension DessertDetailVC: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension DessertDetailVC {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let details = details else { return UITableViewCell() }
         
         if indexPath.row == 0 {

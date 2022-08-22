@@ -22,7 +22,7 @@ class InstructionsCell: UITableViewCell {
     
     func set(details: Details) {
         nameLabel.text = "Instructions"
-        instructionsLabel.text = details.strInstructions
+        instructionsLabel.text = details.instructions
     }
     
     private func configure() {

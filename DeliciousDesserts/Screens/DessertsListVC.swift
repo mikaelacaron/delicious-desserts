@@ -7,9 +7,8 @@
 
 import UIKit
 
-class DessertsListVC: UIViewController {
+class DessertsListVC: UITableViewController {
     
-    let tableView = UITableView()
     var desserts: [Dessert] = []
     var networkManager: NetworkManagerProtocol
     
@@ -43,11 +42,7 @@ class DessertsListVC: UIViewController {
     }
     
     func configureTableView() {
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
         tableView.rowHeight = 80
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.removeExcessCells()
         tableView.register(DessertCell.self, forCellReuseIdentifier: DessertCell.reuseID)
     }
@@ -68,17 +63,17 @@ class DessertsListVC: UIViewController {
     
     func updateUI(with desserts: [Dessert]) {
         self.desserts = desserts
-        tableView.reloadDataOnMainThread()
+        reloadDataOnMainThread()
     }
     
 }
 
-extension DessertsListVC: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension DessertsListVC {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return desserts.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DessertCell.reuseID) as! DessertCell
         let dessert = desserts[indexPath.row]
         cell.set(dessert: dessert)
@@ -86,7 +81,7 @@ extension DessertsListVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let dessert = desserts[indexPath.row]
         let detailVC = DessertDetailVC(dessert: dessert, networkManager: networkManager)
         navigationController?.pushViewController(detailVC, animated: true)
